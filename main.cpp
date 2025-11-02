@@ -37,17 +37,9 @@ int main()
 		str.append(to_string(i));
 	}
 	int count = 0;
-	//for (auto s : str)
-	//{
-	//	if (s == '2')
-	//	{
-	//		count++;
-	//	}
-	//}
 
 	count = std::count(str.begin(), str.end(), '2');
 
-	/*cout << str << endl;*/
 	cout << count << endl;
 	return 0;
 }
