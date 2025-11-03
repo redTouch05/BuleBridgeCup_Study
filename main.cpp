@@ -2,7 +2,7 @@
 #include<string>
 #include<algorithm>
 #include<cmath>
-
+#include<vector>
 //#include<bits/stdc++.h>
 using namespace std;
 
@@ -28,18 +28,344 @@ using namespace std;
 //}
 
 
+//int main()
+//{
+//	int i;
+//	string str;
+//	for (i = 1; i <= 2020; i++)
+//	{
+//		str.append(to_string(i));
+//	}
+//	int count = 0;
+//
+//	count = std::count(str.begin(), str.end(), '2');
+//
+//	cout << count << endl;
+//	return 0;
+//}
+
+
+////动态规划
+//int count(int num)
+//{
+//	if (num < 0)
+//	{
+//		cout << "请输入大于0的数!" << endl;
+//		return -1;
+//	}
+//  //f(n)=f(n-1)+f(n-2)
+//  //f(1)=1 f(2)=2
+//	if (num == 1)
+//	{
+//		return 1;
+//	}
+//	if (num == 2)
+//	{
+//		return 2;
+//	}
+//	return count(num - 1) + count(num - 2);
+//}
+//
+//
+//
+//int main()
+//{
+//	cout << count(20) << endl;
+//	return 0;
+//}
+
+
+//归并排序
+
+
+
+//阶段2 合并
+//int merge_count(vector<int> &nums, int left, int mid, int right)
+//{
+//   //1.创建一个临时数组
+//   vector<int> temp(right - left + 1);
+//   int i = left;//左子数组index
+//   int j = mid + 1;//右子数组index
+//   int posPair = 0;
+//   int k = 0;//临时数组index
+//   while (i <= mid && j <= right)
+//   {
+//	   
+//	   if (nums[i] <= nums[j])//构成正序对
+//	   {
+//		   posPair += (right - j + 1);
+//		   temp[k] = nums[i];
+//		   k++;
+//		   i++;
+//	   }
+//	   else
+//	   {
+//		   //不构造正序对 右元素进入temp
+//		   temp[k] = nums[j];
+//		   k++;
+//		   j++;
+//	   }
+//   }
+//   //上面一圈遍历完后 要么左边剩 要么右边剩 处理
+//   while (i <= mid)
+//   {
+//	   temp[k++] = nums[i++];
+//   }
+//
+//   while (j <= right)
+//   {
+//	   temp[k++] = nums[j++];
+//   }
+//
+//   //将临时数组结果复制到原数组 使left~right区间有序
+//   for (int q = 0; q < temp.size(); q++)
+//   {
+//	   nums[left + q] = temp[q];
+//   }
+//   return posPair;
+//}
+//
+//
+//
+////阶段1 拆分 
+//int mergeSort_countPosPair(vector<int>& nums, int left, int right)
+//{
+//	//统计本阶段的正序对个数
+//	
+//	int mid = 0;
+//	int posPair = 0;
+//	if (left < right)
+//	{
+//		mid = left + (right - left) / 2;//==>(r-l)/2 避免溢出
+//		//拆分左边
+//		posPair += mergeSort_countPosPair(nums, left, mid);
+//		//拆分右边
+//		posPair += mergeSort_countPosPair(nums, mid + 1, right);
+//		//合并
+//		posPair += merge_count(nums, left, mid, right);
+//	}
+//	return posPair;
+//}
+//
+//int countNegPairs(vector<int>& nums)
+//{
+//	int n = nums.size();
+//	int posPairs = mergeSort_countPosPair(nums, 0, n - 1);
+//	int allPairs = n * (n - 1) / 2;
+//	return allPairs - posPairs;
+//}
+//
+//int main()
+//{
+//	vector<int> nums = { 5, 2, 6, 1, 3, 4 };
+//	cout << countNegPairs(nums) << endl;
+//	return 0;
+//}
+
+
+
+////合并
+//int merge(vector<int>& nums, int left, int mid, int right)
+//{
+//	vector<int> temp(right - left + 1);
+//	int posPairs = 0;
+//	int i = left;
+//	int j = mid + 1;
+//	int k = 0;
+//	while (i <= mid && j <= right)
+//	{
+//		if (nums[i] < nums[j])
+//		{
+//			posPairs += (right - j + 1);//这里要posPairs要累计 不然会出bug
+//			temp[k] = nums[i];
+//			i++;
+//			k++;
+//		}
+//		else
+//		{
+//			temp[k] = nums[j];
+//			j++;
+//			k++;
+//		}
+//	}
+//
+//	//当左边有剩余
+//	while (i <= mid)
+//	{
+//		temp[k++] = nums[i++];
+//	}
+//
+//	//当右边有剩余
+//	while (j <= right)
+//	{
+//		temp[k++] = nums[j++];
+//	}
+//
+//	//把temp复制给nums 确保left~right区间有序
+//	for (int p = 0; p < temp.size(); p++)
+//	{
+//		nums[left + p] = temp[p];
+//	}
+//	return posPairs;
+//}
+//
+//
+//
+//
+//
+////拆分
+//int mergeSort_countPosPair(vector<int>& nums, int left, int right)
+//{
+//	int mid = left + (right - left) / 2;
+//	int posPairs = 0;
+//	//递归出口
+//	if (left < right)
+//	{
+//		//拆分左边
+//		posPairs += mergeSort_countPosPair(nums, left, mid);
+//
+//		//拆分右边
+//		posPairs += mergeSort_countPosPair(nums, mid + 1, right);
+//
+//		//合并
+//		posPairs += merge(nums, left, mid, right);
+//
+//	}
+//
+//	return posPairs;
+//}
+//
+//int count_negPairs(vector<int>& nums)
+//{
+//	int n = nums.size();
+//	int posPairs = mergeSort_countPosPair(nums, 0, n - 1);
+//	int allPairs = n * (n - 1) / 2;
+//	return allPairs - posPairs;
+//}
+//
+//int main()
+//{
+//	vector<int> nums = { 5, 2, 6, 1, 3, 4 };
+//	int ans = count_negPairs(nums);
+//	cout << ans << endl;
+//
+//	vector<int> nums2 = { 4, 3, 2, 1 };
+//	cout << count_negPairs(nums2) << endl;
+//
+//	return 0;
+//}
+
+
+
+
+
+////合并
+//void merge(vector<int>& nums, int left, int mid, int right)
+//{
+//	vector<int> temp(right - left + 1);
+//	int i = left;
+//	int j = mid + 1;
+//	int k = 0;
+//	while (i <= mid && j <= right)
+//	{
+//		if (nums[i] < nums[j])
+//		{
+//			temp[k] = nums[i];
+//			i++;
+//			k++;
+//		}
+//		else
+//		{
+//			temp[k] = nums[j];
+//			j++;
+//			k++;
+//		}
+//	}
+//
+//	//当左边有剩余
+//	while (i <= mid)
+//	{
+//		temp[k++] = nums[i++];
+//	}
+//
+//	//当右边有剩余
+//	while (j <= right)
+//	{
+//		temp[k++] = nums[j++];
+//	}
+//
+//	//把temp复制给nums 确保left~right区间有序
+//	for (int p = 0; p < temp.size(); p++)
+//	{
+//		nums[left + p] = temp[p];
+//	}
+//}
+//
+//
+//
+//
+//
+////拆分
+//void mergeSort(vector<int>& nums, int left, int right)
+//{
+//	int mid = left + (right - left) / 2;
+//	//递归出口
+//	if (left < right)
+//	{
+//		//拆分左边
+//		mergeSort(nums, left, mid);
+//
+//		//拆分右边
+//		mergeSort(nums, mid + 1, right);
+//
+//		//合并
+//		merge(nums, left, mid, right);
+//
+//	}
+//
+//}
+//
+//
+//int main()
+//{
+//	vector<int> nums = { 5, 2, 6, 1, 3, 4 };
+//	mergeSort(nums, 0, nums.size() - 1);
+//	for (auto single : nums)
+//	{
+//		cout << single << endl;
+//	}
+//
+//	return 0;
+//}
+
+
+//缺失的数字
+
+
+
+void find_num(vector<int>& nums)
+{
+	int sum1 = 0;
+	int sum2 = 0;
+	for (int i = 0; i < nums.size(); i++)
+	{
+		sum1 += nums[i];
+	}
+	/*cout << sum1 << endl;*/
+	for (int j = 0; j <= nums.size(); j++)
+	{
+		sum2 += j;
+	}
+	/*cout << sum2 << endl;*/
+
+	cout << sum2 - sum1 << endl;
+}
+
+
 int main()
 {
-	int i;
-	string str;
-	for (i = 1; i <= 2020; i++)
-	{
-		str.append(to_string(i));
-	}
-	int count = 0;
+	vector<int> nums = { 0, 1, 2, 3, 4, 5, 7, 8, 9, 10 };//缺3
+	find_num(nums);
 
-	count = std::count(str.begin(), str.end(), '2');
-
-	cout << count << endl;
 	return 0;
 }
