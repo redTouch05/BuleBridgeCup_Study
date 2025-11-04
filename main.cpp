@@ -3,10 +3,9 @@
 #include<algorithm>
 #include<cmath>
 #include<vector>
+#include<unordered_map>
 //#include<bits/stdc++.h>
 using namespace std;
-
-
 //int main()
 //{
 //	int i, j;
@@ -164,36 +163,37 @@ using namespace std;
 
 
 
-
-
-
-//缺失的数字
-
-
-
-void find_num(vector<int>& nums)
+vector<int> twoNums(vector<int>& nums, int target)
 {
-	int sum1 = 0;
-	int sum2 = 0;
-	for (int i = 0; i < nums.size(); i++)
-	{
-		sum1 += nums[i];
-	}
-	/*cout << sum1 << endl;*/
-	for (int j = 0; j <= nums.size(); j++)
-	{
-		sum2 += j;
-	}
-	/*cout << sum2 << endl;*/
+	//key:数组中的数值 value:对应的下标
+	unordered_map<int, int> hashMap;
+	int ans = 0;
 
-	cout << sum2 - sum1 << endl;
+	for (int i = 0; i < nums.size(); ++i)
+	{
+		ans = target - nums[i];
+		//find函数返回的是迭代器 如果!= end() 说明哈希表中存储了对应的键和值
+		if (hashMap.find(ans) != hashMap.end())
+		{
+			return { hashMap[ans],i };
+		}
+		hashMap.insert({ nums[i],i });
+	}
+
 }
+
 
 
 int main()
 {
-	vector<int> nums = { 0, 1, 2, 3, 4, 5, 7, 8, 9, 10 };//缺3
-	find_num(nums);
+	vector<int> nums = { 2,7,11,15,19,4,5 };
+	int target = 9;
+	vector<int> ans = twoNums(nums, target);
+	for (auto i : ans)
+	{
+		cout << i << endl;
+	}
+	cout << nums[ans[0]] << " " << nums[ans[1]] << endl;
 
-	return 0;
 }
+

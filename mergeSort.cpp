@@ -1,4 +1,15 @@
+#pragma once
+#include<iostream>
+#include<string>
+#include<algorithm>
+#include<cmath>
+#include<vector>
+
+
+
+
 //合并
+using namespace std;
 int merge(vector<int>& nums, int left, int mid, int right)
 {
 	vector<int> temp(right - left + 1);
@@ -77,64 +88,64 @@ int count_negPairs(vector<int>& nums)
 	return allPairs - posPairs;
 }
 
-int main()
-{
-	vector<int> nums = { 5, 2, 6, 1, 3, 4 };
-	int ans = count_negPairs(nums);
-	cout << ans << endl;
+//int main()
+//{
+//	vector<int> nums = { 5, 2, 6, 1, 3, 4 };
+//	int ans = count_negPairs(nums);
+//	cout << ans << endl;
+//
+//	vector<int> nums2 = { 4, 3, 2, 1 };
+//	cout << count_negPairs(nums2) << endl;
+//
+//	return 0;
+//}
+//
+//
 
-	vector<int> nums2 = { 4, 3, 2, 1 };
-	cout << count_negPairs(nums2) << endl;
-
-	return 0;
-}
 
 
-
-
-
-//合并
-void merge(vector<int>& nums, int left, int mid, int right)
-{
-	vector<int> temp(right - left + 1);
-	int i = left;
-	int j = mid + 1;
-	int k = 0;
-	while (i <= mid && j <= right)
-	{
-		if (nums[i] < nums[j])
-		{
-			temp[k] = nums[i];
-			i++;
-			k++;
-		}
-		else
-		{
-			temp[k] = nums[j];
-			j++;
-			k++;
-		}
-	}
-
-	//当左边有剩余
-	while (i <= mid)
-	{
-		temp[k++] = nums[i++];
-	}
-
-	//当右边有剩余
-	while (j <= right)
-	{
-		temp[k++] = nums[j++];
-	}
-
-	//把temp复制给nums 确保left~right区间有序
-	for (int p = 0; p < temp.size(); p++)
-	{
-		nums[left + p] = temp[p];
-	}
-}
-
+////合并
+//void merge(vector<int>& nums, int left, int mid, int right)
+//{
+//	vector<int> temp(right - left + 1);
+//	int i = left;
+//	int j = mid + 1;
+//	int k = 0;
+//	while (i <= mid && j <= right)
+//	{
+//		if (nums[i] < nums[j])
+//		{
+//			temp[k] = nums[i];
+//			i++;
+//			k++;
+//		}
+//		else
+//		{
+//			temp[k] = nums[j];
+//			j++;
+//			k++;
+//		}
+//	}
+//
+//	//当左边有剩余
+//	while (i <= mid)
+//	{
+//		temp[k++] = nums[i++];
+//	}
+//
+//	//当右边有剩余
+//	while (j <= right)
+//	{
+//		temp[k++] = nums[j++];
+//	}
+//
+//	//把temp复制给nums 确保left~right区间有序
+//	for (int p = 0; p < temp.size(); p++)
+//	{
+//		nums[left + p] = temp[p];
+//	}
+//}
+//
 
 
 
@@ -160,14 +171,14 @@ void mergeSort(vector<int>& nums, int left, int right)
 }
 
 
-int main()
-{
-	vector<int> nums = { 5, 2, 6, 1, 3, 4 };
-	mergeSort(nums, 0, nums.size() - 1);
-	for (auto single : nums)
-	{
-		cout << single << endl;
-	}
-
-	return 0;
-}
+//int main()
+//{
+//	vector<int> nums = { 5, 2, 6, 1, 3, 4 };
+//	mergeSort(nums, 0, nums.size() - 1);
+//	for (auto single : nums)
+//	{
+//		cout << single << endl;
+//	}
+//
+//	return 0;
+//}
