@@ -163,37 +163,72 @@ using namespace std;
 
 
 
-vector<int> twoNums(vector<int>& nums, int target)
+//vector<int> twoNums(vector<int>& nums, int target)
+//{
+//	//key:数组中的数值 value:对应的下标
+//	unordered_map<int, int> hashMap;
+//	int ans = 0;
+//
+//	for (int i = 0; i < nums.size(); ++i)
+//	{
+//		ans = target - nums[i];
+//		//find函数返回的是迭代器 如果!= end() 说明哈希表中存储了对应的键和值
+//		if (hashMap.find(ans) != hashMap.end())
+//		{
+//			return { hashMap[ans],i };
+//		}
+//		hashMap.insert({ nums[i],i });
+//	}
+//
+//}
+//
+//
+//
+//int main()
+//{
+//	vector<int> nums = { 2,7,11,15,19,4,5 };
+//	int target = 9;
+//	vector<int> ans = twoNums(nums, target);
+//	for (auto i : ans)
+//	{
+//		cout << i << endl;
+//	}
+//	cout << nums[ans[0]] << " " << nums[ans[1]] << endl;
+//
+//}
+
+//冒泡排序
+
+
+void bubbleSort(vector<int>& nums)
 {
-	//key:数组中的数值 value:对应的下标
-	unordered_map<int, int> hashMap;
-	int ans = 0;
-
-	for (int i = 0; i < nums.size(); ++i)
-	{
-		ans = target - nums[i];
-		//find函数返回的是迭代器 如果!= end() 说明哈希表中存储了对应的键和值
-		if (hashMap.find(ans) != hashMap.end())
-		{
-			return { hashMap[ans],i };
-		}
-		hashMap.insert({ nums[i],i });
-	}
-
+    int n = nums.size();
+    for (int i = 0; i < n - 1; i++)
+    {
+        for (int j = 0; j < n - 1 - i; j++)
+        {
+            if (nums[j] > nums[j + 1])
+            {
+                std::swap(nums[j], nums[j + 1]);
+            }
+        }
+    }
 }
+
+
 
 
 
 int main()
 {
-	vector<int> nums = { 2,7,11,15,19,4,5 };
-	int target = 9;
-	vector<int> ans = twoNums(nums, target);
-	for (auto i : ans)
-	{
-		cout << i << endl;
-	}
-	cout << nums[ans[0]] << " " << nums[ans[1]] << endl;
+
+    std::vector<int> arr = { 64, 34, 25, 12, 22, 11, 90 };
+    bubbleSort(arr);
+
+    std::cout << "排序后数组: ";
+    for (int num : arr) {
+        std::cout << num << " ";
+    }
+    // 输出：11 12 22 25 34 64 90
 
 }
-
